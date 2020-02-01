@@ -232,3 +232,4 @@ def create_project():
 	if request.method == 'POST':
 		proj = request.form['project']
 		os.system("mkdir -p data/" +session['username'] + "/" + "project")
+		return jsonify({})
