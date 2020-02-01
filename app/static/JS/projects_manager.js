@@ -4,9 +4,20 @@ $(document).ready(function() {
 
 });
 
-function onProjectClick(projectPath) {
 
 
+function onProjectClick(projectPath, project) {
+
+	var data = {
+		project : project,
+		project_path: projectPath
+	}
+
+	$.ajax({
+		type: "POST",
+		url: '/index',
+		data: data
+	})
 
 }
 
@@ -39,7 +50,7 @@ function getUserHTML(users) {
 
 			project = projects[j];
 
-			html += "<div onclick='onProjectClick("+'"'+project[1]+'"'+")'class='dir-header gray text-light' style='margin-left:50px;'><h5>"+project[0]+"</h5></div>";
+			html += "<div onclick='onProjectClick("+'"'+project[1]+'"'+ ',"'+project[0]+'"' +")'class='dir-header gray text-light' style='margin-left:50px;'><h5>"+project[0]+"</h5></div>";
 
 		}
 
