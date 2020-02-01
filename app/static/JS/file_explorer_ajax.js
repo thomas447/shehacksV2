@@ -59,7 +59,6 @@ function getFileExplorerContent() {
 		url: "/files",
 		success: function(result) {
 
-			console.log(result);
 			html = directoryHTML(result.dir, 0);
 
 			$("#file-explorer").html(html);
