@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Climb IDE</title>
+	<link  rel="stylesheet type="text/css" href="{{ url_for('static',filename='codemirror-5.51.0/lib/codemirror.css') }}">
+	<link  rel="stylesheet type="text/css" href="{{ url_for('static',filename='codemirror-5.51.0/theme/dracula.css') }}">
+	<script src="{{ url_for('static',filename='codemirror-5.51.0/lib/codemirror.js') }}"></script>	
+	<script src="{{ url_for('static',filename='codemirror-5.51.0/mode/python/python.js') }}"></script>	
+	
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<script src="{{ url_for('static',filename='JS/file_explorer_ajax.js') }}"></script>	
+	<script src="{{ url_for('static',filename='JS/collaborators.js') }}"></script>	
+	<script src="{{ url_for('static',filename='JS/editor_manager.js') }}"></script>	
+</head>
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+	  <a class="navbar-brand" href="#">Climb IDE</a>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav mr-auto">
+	      <li class="nav-item active">
+	        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="projects.html">Projects</a>
+	      </li>
+	    </ul>
+	    <button class="btn btn-outline-success my-2 my-sm0" type = "submit" style = "margin-right: 5px;">{{ session["username"] }}</button>
+	    <form class="form-inline my-2 my-lg-0" action="/logout">
+	    	<button class="btn btn-outline-danger my-2 my-sm-0">Logout</button>
+	    </form>
+	  </div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-12 text-center bg-secondary text-light">
+				<h1 style="margin-top : 20px; margin-bottom : 20px;">{{ session["working_name"] }}</h1>
+			</div>
+		</div>
+		<div class="row gray">
+			<div class="col-3 text-center" style = "padding-top: 20px; padding-bottom: 20px;">
+				<button class="btn btn-light" onclick = "onNewDirectory()">New Folder</button>
+				<button class="btn btn-primary" onclick = "onNewFile()">New File</button>
+			</div>
+			<div class="col-6 text-center" style = "padding-top: 20px; padding-bottom: 20px;">
+				<button class="btn btn-success" onclick="onRun()">Run</button>
+				<button class="btn btn-danger" style="margin-right: 50px">Terminate</button>
+				<button class="btn btn-secondary" id = "save" onclick="onSave()">Save</button>
+				<button class="btn btn-primary" onclick="onRefresh()">Refresh</button>
+			</div>
+			
+			<div class="col-3">
+				
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="col-3 bg-light">
+				<h5 style = "margin-top: 15px;">File Explorer</h5>
+				<hr>
+				<div class="container file-explorer" id = "file-explorer">
+					
+				</div>
+			</div>
+			<div class="col-7 bg-dark text-light" style="padding: 0px;">
+				<span style="margin: 5px;" id ="curr_file"><-- Choose a file to start editing</span>
+				<textarea id="editor"># Welcome to Climb IDE. Choose a file to get started #</textarea>
+				<script>
+					var editor = CodeMirror.fromTextArea(document.getElementById("editor"), {
+						mode: "python",
+						theme: "dracula",
+				  	  	lineNumbers: true
+				  	});
+
+				  	editor.setSize(null,480);
+				</script>
+				<div class="bg-dark text-light" style = "height: 250px">
+					<h5 style = "margin-top: 15px; margin-left: 15px;">Console</h5>
+					<hr/>
+					<div class="console pre-scrollable" id="console" style="margin-left: 15px; max-height: 150px">
+
+					</div>
+				</div>
+			</div>
+			<div class="col-2 bg-light">
+				<h5 style = "margin-top: 15px;">Online Collaborators</h5>
+				<hr/>
+				<div class="container collab" id="collab">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	<script src="{{ url_for('static',filename='JS/live_comm.js') }}"></script>	
+</body>
+
+<style>
+
+.collaborator-block {
+	margin-bottom: 15px;
+	padding: 5px;
+	border-radius: 25px;
+}
+
+.gray {
+	background-color: #ddd; 
+}
+
+.dir-header {
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-bottom: 10px;
+}
+
+.file {
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-bottom: 10px;
+}
+
+</style>
+
+</html>
