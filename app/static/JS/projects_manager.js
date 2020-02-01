@@ -10,6 +10,24 @@ function redirToIndex() {
 	window.location.replace('/index');
 }
 
+function createProject() {
+	var name = prompt("Please Enter a name for your project");
+
+	var data = {
+		project: name
+	}
+
+	$.ajax({
+		type: "POST".
+		url: "/create_project",
+		data: "data",
+		success: function() {
+			getProjects();
+		}
+	})
+
+}
+
 function onProjectClick(projectPath, project, projectElem) {
 
 	if (project_active != projectElem) {
