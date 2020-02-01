@@ -211,7 +211,15 @@ def get_proj(path):
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
 	if request.method == 'GET':
+		if not session["logged_in"]:
+			return redirect(url_for("/login"))
 		return render_template("projects.html")
 
 	if request.method  == 'POST':
 		return jsonify(get_proj('data/'))
+
+@app.route('/create_project', methods=['POST'])
+def create_project():
+	if request.methos == 'POST':
+		proj = request.form['project']
+		os.system("mkdir -p data/" +session['username'] + "/" + "project")
