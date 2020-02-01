@@ -102,9 +102,9 @@ def index():
 	if request.method  == "POST":
 		proj_path = request.form["project_path"]
 		proj = request.form["project"]
-		session["working_name"] = project_path
-		session["curr_project"] = project
-		return render_template("index.html")
+		session["working_name"] = proj_path
+		session["curr_project"] = proj
+		return redirect(url_for("index"))
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
