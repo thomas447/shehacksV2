@@ -90,13 +90,21 @@ def rec_files(path, d, c):
 	"""
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods=["GET", "POST"])
 def index():
-	if not session.get('logged_in'):
-		return redirect(url_for('login'))
-	online[session["username"]] = session["curr_project"]
-	return render_template("index.html")
-
+	if request.method == "GET":
+		if not session.get('logged_in'):
+			return redirect(url_for('login'))
+		if not sesssion["working_name"]:
+			return redirect(url_for('projects'))
+		online[session["username"]] = session["curr_project"]
+		return render_template("index.html")
+	if request.method  == "POST":
+		proj_path = request.form["project_path"]
+		proj = request.form["project"]
+		session["working_name"] = project_path
+		session["curr_project"] = project
+		return render_template("index.html")
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -107,10 +115,10 @@ def login():
 	if (request.method == 'POST'):
 		session["username"] = request.form["username"]
 		session["logged_in"] = True
-		session["working_name"] = 'admin/Project';
-		session["curr_project"] = 'Project';
+		session["working_name"] = '';
+		session["curr_project"] = '';
 		session["curr_file"] = ''
-		return redirect(url_for("index"))
+		return redirect(url_for("projects"))
 
 	return render_template('login.html');
 
@@ -166,7 +174,7 @@ def update_file():
 			if path in open_files:
 				open_files[path] = content
 			if path == "":
-				return
+				return jsonify({})
 			with open(path, 'w') as f:
 				f.write(content)
 	return jsonify({})
@@ -213,6 +221,7 @@ def projects():
 	if request.method == 'GET':
 		if not session["logged_in"]:
 			return redirect(url_for("/login"))
+		session["working_proj"]=  ""
 		return render_template("projects.html")
 
 	if request.method  == 'POST':
