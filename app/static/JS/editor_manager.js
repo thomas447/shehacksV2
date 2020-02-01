@@ -10,7 +10,7 @@ $(document).ready(function() {
 	editor.on("change", function () {
 		changeCounter += 1;
 		if (changeCounter < 50) {
-			$("#save").html('Saves have not been changed...');
+			$("#save").html('Saving');
 		}
 
 	})

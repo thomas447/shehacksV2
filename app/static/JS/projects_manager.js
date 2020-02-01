@@ -42,7 +42,6 @@ function onProjectClick(projectPath, project, projectElem) {
 	})
 
 	return false;
-;
 }
 
 function getProjects() {
