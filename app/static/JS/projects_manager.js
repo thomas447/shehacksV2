@@ -1,12 +1,31 @@
+var project_active = null;
+
 $(document).ready(function() {
 
 	getProjects();
 
 });
 
+function redirToIndex() {
+	window.location.replace('/index');
+}
 
+function onProjectClick(projectPath, project, projectElem) {
 
-function onProjectClick(projectPath, project) {
+	if (project_active != projectElem) {
+
+		if (project_active != null) {
+			project_active.classList.remove('bg-success');
+			project_active.classList.remove('text-light');
+			project_active.classList.add('gray');
+		}
+
+		project_active = projectElem;
+
+		project_active.classList.add('bg-success');
+		project_active.classList.add('text-light');
+		project_active.classList.remove('gray');
+	}
 
 	var data = {
 		project : project,
@@ -18,10 +37,10 @@ function onProjectClick(projectPath, project) {
 		url: '/index',
 		data: data,
 		sucess: function() {
+
 		}
 	})
 
-	window.location.replace('/index');
 	return false;
 ;
 }
@@ -55,7 +74,7 @@ function getUserHTML(users) {
 
 			project = projects[j];
 
-			html += "<div onclick='onProjectClick("+'"'+project[1]+'"'+ ',"'+project[0]+'"' +")'class='dir-header gray text-light' style='margin-left:50px;'><h5>"+project[0]+"</h5></div>";
+			html += "<div onclick='onProjectClick("+'"'+project[1]+'"'+ ',"'+project[0]+'"' +", this)'class='dir-header gray text-light' style='margin-left:50px;'><h5>"+project[0]+"</h5></div>";
 
 		}
 
