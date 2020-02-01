@@ -197,10 +197,21 @@ def ses():
 		type = request.form['type']
 		return jsonify({"ses": session[type]})
 
+def get_proj(path):
+	d = dict()
+	d['users'] = list()
+	content = os.listdir(path)
+	for user in content:
+		l = list()
+		for proj in os.listdir(path + user):
+			l.append(proj)
+		d['users'].append([user, proj, path+user+'/'+proj])
+	return d
+
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
 	if request.method == 'GET':
 		return render_template("projects.html")
 
 	if request.method  == 'POST':
-		pass
+		return jsonify(get_proj('data/'))
