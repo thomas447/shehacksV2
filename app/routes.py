@@ -204,8 +204,8 @@ def get_proj(path):
 	for user in content:
 		l = list()
 		for proj in os.listdir(path + user):
-			l.append(proj)
-		d['users'].append([user, proj, path+user+'/'+proj])
+			l.append([proj,  path+user+'/'+proj])
+		d['users'].append([user, l])
 	return d
 
 @app.route('/projects', methods=['GET', 'POST'])
