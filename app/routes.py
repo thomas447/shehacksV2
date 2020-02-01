@@ -196,3 +196,11 @@ def ses():
 	if request.method == 'POST':
 		type = request.form['type']
 		return jsonify({"ses": session[type]})
+
+@app.route('/projects', methods=['GET', 'POST'])
+def projects():
+	if request.method == 'GET':
+		return render_template("project.html")
+
+	if request.method  == 'POST':
+		pass
