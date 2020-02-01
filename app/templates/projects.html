@@ -7,6 +7,8 @@
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 		
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+		<script src="{{ url_for('static',filename='JS/projects_manager.js') }}"></script>	
 	</head>
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -30,5 +32,49 @@
 		    </form>
 		  </div>
 		</nav>
+		<div class="row">
+			<div class="col-3"></div>
+			<h1 class = "col-3"style = "margin-top: 50px; margin-bottom: 50px;">Users and Projects:</h1>
+			<div class="col-3 text-center">
+				<button class="btn btn-primary" style ="margin-top: 55px">New Project</button>
+			</div>
+			<div class="col-3"></div>
+		</div>
+		<div class="row">
+			<div class="col-3"></div>
+			<div class="col-6 bg-light" id="projects" style ='height: 100%; border-radius: 10px;'>
+				<div class="dir-header bg-dark text-light" ><h5>Username</h5></div>
+			</div>
+			<div class="col-3"></div>
+		</div>
 	</body>
 </html>
+
+<style>
+
+.collaborator-block {
+	margin-bottom: 15px;
+	padding: 5px;
+	border-radius: 25px;
+}
+
+.gray {
+	background-color: #ddd; 
+}
+
+.dir-header {
+	margin-top: 10px;
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-bottom: 20px;
+	padding-top: 20px;
+	padding-bottom: 10px;
+}
+
+.file {
+	border-radius: 10px;
+	padding-left: 20px;
+	margin-bottom: 10px;
+}
+
+</style>

@@ -60,6 +60,8 @@ function onClickFile(file) {
 
 function onSave() {
 
+	$("#save").html('Saved');
+
 	var textContent = editor.getDoc().getValue();
 
 	var data = {
@@ -79,6 +81,7 @@ function onRefresh() {
 }
 
 function onRun() {
+	onSave();
 	if (currentFilePath != '') {
 		runFileAjax(currentFilePath);
 	}
