@@ -102,9 +102,9 @@ def index():
 	if request.method  == "POST":
 		proj_path = request.form["project_path"]
 		proj = request.form["project"]
-		session["working_name"] = proj_path
+		session["working_name"] = proj_path.replace("data/", "")
 		session["curr_project"] = proj
-		return redirect(url_for("index"))
+		return jsonify({})
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
