@@ -200,7 +200,7 @@ def ses():
 @app.route('/projects', methods=['GET', 'POST'])
 def projects():
 	if request.method == 'GET':
-		return render_template("project.html")
+		return render_template("projects.html")
 
 	if request.method  == 'POST':
 		pass
