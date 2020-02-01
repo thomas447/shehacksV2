@@ -16,9 +16,14 @@ function onProjectClick(projectPath, project) {
 	$.ajax({
 		type: "POST",
 		url: '/index',
-		data: data
+		data: data,
+		sucess: function() {
+		}
 	})
 
+	window.location.replace('/index');
+	return false;
+;
 }
 
 function getProjects() {
