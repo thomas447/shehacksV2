@@ -95,7 +95,7 @@ def index():
 	if request.method == "GET":
 		if not session.get('logged_in'):
 			return redirect(url_for('login'))
-		if not sesssion["working_name"]:
+		if session["working_name"] == "":
 			return redirect(url_for('projects'))
 		online[session["username"]] = session["curr_project"]
 		return render_template("index.html")
@@ -220,7 +220,7 @@ def get_proj(path):
 def projects():
 	if request.method == 'GET':
 		if not session["logged_in"]:
-			return redirect(url_for("/login"))
+			return redirect(url_for("login"))
 		session["working_proj"]=  ""
 		return render_template("projects.html")
 
