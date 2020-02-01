@@ -11,6 +11,7 @@ function redirToIndex() {
 }
 
 function createProject() {
+	
 	var name = prompt("Please Enter a name for your project");
 
 	var data = {
@@ -18,9 +19,9 @@ function createProject() {
 	}
 
 	$.ajax({
-		type: "POST".
+		type: "POST",
 		url: "/create_project",
-		data: "data",
+		data: data,
 		success: function() {
 			getProjects();
 		}
